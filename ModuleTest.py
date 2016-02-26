@@ -1,4 +1,3 @@
-
 import numpy as np
 import pandas as pd
 
@@ -7,21 +6,13 @@ print aa.astype(str)
 print np.size(aa, axis=0)
 
 print "aa %s bb" % (str(aa[0]))
-
-xxx = pd.read_csv('.\dataset\AWDAS2_201505_1_align.csv')
-ccc = list(xxx.columns.values)
-print ccc[2]
-print str(xxx.loc[0][0]) + ' : ' + str(xxx.loc[0][1])
 print '--------------------------'
 
-tsd = pd.DataFrame.from_csv('.\dataset\datetime_data.csv', infer_datetime_format=True)
-print tsd.index[0:10]
-print tsd[0:10]
-print tsd.head()
+ts = pd.DataFrame.from_csv('.\dataset\datetime_data.csv', header=None, infer_datetime_format=True)
+ts_s = pd.Series(ts[1], index=ts.index)
+# print ts_series.head()
 print '--------------------------'
 
-rng = pd.date_range('1/1/2011', periods=1440/3, freq='H')
-ts = pd.Series(np.random.randn(len(rng)), index=rng)
-# print ts[1:]
-# print ts.index[1:]
-
+ts_raw = pd.DataFrame.from_csv('.\dataset\AWDAS2_201505_1_align.csv', infer_datetime_format=True)
+ts_raw.F2218
+ts_raw_series = pd.Series(ts_raw.F2218, index=ts_raw.index)

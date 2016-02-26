@@ -3,6 +3,9 @@ import numpy as np
 from flask import Flask, render_template
 import json
 import plotly
+
+import plotly.graph_objs as go
+
 import pandas as pd
 
 app = Flask(__name__)
@@ -68,9 +71,6 @@ def index1():
     # for templating
     ids = ['graph-{}'.format(i) for i, _ in enumerate(graphs)]
 
-    # Convert the figures to JSON
-    # PlotlyJSONEncoder appropriately converts pandas, datetime, etc
-    # objects to their JSON equivalents
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index.html',
@@ -84,17 +84,14 @@ def index2():
     ts = pd.Series(np.random.randn(len(rng)), index=rng)
 
     graphs = dict(
-            data=[
-                dict(
-                    x=ts.index,  # Can use the pandas data structures directly
-                    y=ts
-                )
-            ]
-        )
+        data=[
+            dict(
+                x=ts.index,  # Can use the pandas data structures directly
+                y=ts
+            )
+        ]
+    )
 
-    # Convert the figures to JSON
-    # PlotlyJSONEncoder appropriately converts pandas, datetime, etc
-    # objects to their JSON equivalents
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index2.html',
@@ -104,28 +101,80 @@ def index2():
 
 @app.route('/z3')
 def index3():
-    # xxx = pd.read_csv('.\dataset\AWDAS2_201505_1_align.csv')
-    rng = pd.date_range('1/1/2011', periods=1440/3, freq='H')
-    ts = pd.Series(np.random.randn(len(rng)), index=rng)
-    # ts = pd.DataFrame.from_csv('.\dataset\datetime_data.csv', header=None, infer_datetime_format=True)
+    ts_raw = pd.DataFrame.from_csv('.\dataset\AWDAS2_201505_1_align.csv', infer_datetime_format=True)
     graphs = dict(
-            data=[
-                dict(
-                    x=ts.index[1:],  # Can use the pandas data structures directly
-                    y=ts[1:]
-                )
-            ]
-        )
+        data=[
+            dict(
+                x=ts_raw.index,  # Can use the pandas data structures directly
+                y=pd.Series(ts_raw['F2218'], index=ts_raw.index)
+            )
+        ]
+    )
 
-    # Convert the figures to JSON
-    # PlotlyJSONEncoder appropriately converts pandas, datetime, etc
-    # objects to their JSON equivalents
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index3.html',
                            ids=['aaa'],
                            graphJSON=graphJSON,
                            xxx='xxx')
+
+
+@app.route('/z4')
+def index4():
+    ts_raw = pd.DataFrame.from_csv('.\dataset\AWDAS2_201505_1_align.csv', infer_datetime_format=True)
+    graphs = dict(
+        data=[
+            dict(
+                x=[1, 2, 3],  # Can use the pandas data structures directly
+                y=[4, 5, 6],
+                type='bar'
+            ),
+        ],
+        layout=dict(
+            title='first graph'
+        )
+    )
+
+    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('index3.html',
+                           ids=['aaa'],
+                           graphJSON=graphJSON,
+                           xxx='xxx')
+
+
+@app.route('/z5')
+def index5():
+    trace0 = go.Scatter(x=[1.5, 4.5], y=[0.75, 0.75], text=['Unfilled Rectangle', 'Filled Rectangle'], mode='text')
+    data = [trace0]
+    layout = {'xaxis': {'range': [0, 7], 'showgrid': False }, 'yaxis': {'range':[0, 3.5]}, 'width': 600, 'height': 600,
+        'shapes': [
+            # unfilled Rectangle
+            {
+                'type': 'rect',
+                'x0': 1,
+                'y0': 1.5,
+                'x1': 5,
+                'y1': 3,
+                'line': {'color': 'rgba(128, 0, 128, 1)'},
+            },
+            # filled Rectangle
+            {
+                'type': 'rect',
+                'x0': 4,
+                'y0': 1,
+                'x1': 6,
+                'y1': 2,
+                'line': {'color': 'rgba(128, 0, 128, 1)', 'width': 2},
+                'fillcolor': 'rgba(128, 0, 128, 0.7)',
+            },
+        ]
+    }
+    graphs = {'data': data, 'layout': layout}
+
+    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('index3.html', ids=['aaa'], graphJSON=graphJSON, xxx='xxx')
 
 
 if __name__ == "__main__":
