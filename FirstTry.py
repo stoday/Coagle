@@ -212,5 +212,44 @@ def index6():
     return render_template('index3.html', ids=['aaa'], graphJSON=graphJSON, xxx='xxx')
 
 
+@app.route('/z7')
+def index7():
+    ts_raw = pd.DataFrame.from_csv('.\dataset\AWDAS2_201505_1_align.csv', infer_datetime_format=True)
+    xx = ts_raw.index  # Can use the pandas data structures directly
+    yy = pd.Series(ts_raw['F2218'], index=ts_raw.index)
+    data = [go.Scatter(x=xx[0:10], y=yy[0:10])]
+    layout = {
+        'xaxis': {'range': [xx[0], xx[10]], 'showgrid': True},
+        'yaxis': {'range': [48, 60], 'showgrid': True},
+        # 'width': 600, 'height': 600,
+        'shapes': [
+            # unfilled Rectangle
+            {
+                'type': 'rect',
+                'x0': '2015-05-01 00:01:00',
+                'y0': 48,
+                'x1': '2015-05-01 00:02:00',
+                'y1': 60,
+                'line': {'color': 'rgba(128, 0, 128, 1)'},
+            },
+            # filled Rectangle
+            {
+                'type': 'rect',
+                'x0': '2015-05-01 00:03:00',
+                'y0': 48,
+                'x1': '2015-05-01 00:04:00',
+                'y1': 60,
+                'line': {'color': 'rgba(128, 0, 128, 1)', 'width': 2},
+                'fillcolor': 'rgba(128, 0, 128, 0.7)',
+            },
+        ]
+    }
+    graphs = {'data': data, 'layout': layout}
+
+    graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
+
+    return render_template('index3.html', ids=['aaa'], graphJSON=graphJSON, xxx='xxx')
+
+
 if __name__ == "__main__":
     app.run(debug=True)
