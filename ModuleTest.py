@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import sqlite3 as sql
 
 aa = np.random.randint(1, 10, 5)
 print aa.astype(str)
@@ -16,3 +17,5 @@ print '--------------------------'
 ts_raw = pd.DataFrame.from_csv('.\dataset\AWDAS2_201505_1_align.csv', infer_datetime_format=True)
 ts_raw.F2218
 ts_raw_series = pd.Series(ts_raw.F2218, index=ts_raw.index)
+
+sql.connect()

@@ -6,6 +6,8 @@ import plotly
 import plotly.graph_objs as go
 import pandas as pd
 
+import sqlite3 as sql
+
 app = Flask(__name__)
 
 
