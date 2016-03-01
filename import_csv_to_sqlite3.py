@@ -10,14 +10,14 @@ import numpy as np
 conn = sql3.connect('AWDAS2.sqlite')
 
 # impor CSV into SQLite3 file
-# df = pd.DataFrame.from_csv('./dataset/AWDAS2_201505_1_align.csv', infer_datetime_format=True)
-# df.to_sql('AWDAS2_201505_1', conn, if_exists='replace', index=True)
-# print 'Import data is done!'
+df = pd.DataFrame.from_csv('./dataset/AWDAS2_201505_1_align.csv', infer_datetime_format=True)
+df.to_sql('AWDAS2_201505_1', conn, if_exists='replace', index=True)
+print 'Import data is done!'
 
 # Read table information from SQLite3 file
-# print 'Querying...'
-# outcome = pd.read_sql_query('PRAGMA table_info(AWDAS2_201505_1);', conn)
-# print outcome
+print 'Querying...'
+outcome = pd.read_sql_query('PRAGMA table_info(AWDAS2_201505_1);', conn)
+print outcome
 
 # Query data
 start_date = '2015-05-01 00:00:00'

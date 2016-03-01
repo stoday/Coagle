@@ -1,21 +1,10 @@
-import numpy as np
-import pandas as pd
-import sqlite3 as sql
 
-aa = np.random.randint(1, 10, 5)
-print aa.astype(str)
-print np.size(aa, axis=0)
+import re
 
-print "aa %s bb" % (str(aa[0]))
-print '--------------------------'
+text_str = '2016-10-10 00:00:00'
+datetime_part = re.search('\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d', text_str)
+print datetime_part.group()
 
-ts = pd.DataFrame.from_csv('.\dataset\datetime_data.csv', header=None, infer_datetime_format=True)
-ts_s = pd.Series(ts[1], index=ts.index)
-# print ts_series.head()
-print '--------------------------'
 
-ts_raw = pd.DataFrame.from_csv('.\dataset\AWDAS2_201505_1_align.csv', infer_datetime_format=True)
-ts_raw.F2218
-ts_raw_series = pd.Series(ts_raw.F2218, index=ts_raw.index)
 
-sql.connect()
+

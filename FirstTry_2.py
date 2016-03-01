@@ -1,6 +1,6 @@
 
 import numpy as np
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import json
 import plotly
 import plotly.graph_objs as go
@@ -89,6 +89,24 @@ def table8():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template('index3.html', ids=['aaa'], graphJSON=graphJSON, xxx='xxx')
+
+
+# Go to input frame
+@app.route('/text_input')
+def goto_input_text():
+    return render_template('text_input.html')
+
+
+@app.route('/onmi_input', methods=['POST'])
+def my_form_post():
+    text = request.form['text']
+    processed_text = text.upper()
+    ttt = abc()
+    return processed_text + ttt
+
+
+def abc():
+    return 'abccc!!!'
 
 
 if __name__ == "__main__":

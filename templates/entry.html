@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coagle</title>
+    <style type="text/css">
+        body {
+        background-color: #EEE;
+        }
+
+        .center {
+        width: 600px;
+        height: 300px;
+        !border: 5px solid #444;
+        !box-shadow: 1px 5px 5px #666;
+
+        position:absolute;
+        left: 50%;
+        top: 50%;
+
+        margin-top: -250px;
+        margin-left: -300px;
+
+        line-height: 5px;
+        }
+
+        h1 {
+        font-size: 5em;
+        }
+
+        .resizedTextbox {
+        width: 400px;
+        height: 35px;
+
+        font-size: 1.2em;
+        }
+
+        .resizedBtn {
+        width: 100px;
+        height: 40px;
+        }
+
+        h1_smaller {
+        font-size: 0.12em;
+        }
+    </style>
+</head>
+
+<body>
+<div class="center">
+    <h1>
+        <center>
+            <font color=#4885ed>C</font><font color=#db3236>o</font><font color=#f4c20d>a</font><font color=#4885ed>g</font><font color=#3cba54>l</font><font color=#db3236>e</font><h1_smaller>二號機 ver0.1</h1_smaller></h1>
+        </center>
+    <center>
+    <form action="/onmi_input" method="POST">
+        <input type="text" name="onmi_text" class="resizedTextbox">
+        <input type="submit" name="process_onmi" value="Go~" class="resizedBtn">
+    </form>
+    </center>
+</div>
+</body>
+</html>
